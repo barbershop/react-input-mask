@@ -839,6 +839,10 @@ var _initialiseProps = function _initialiseProps() {
             text = event.clipboardData.getData("text/plain");
         }
         if (text) {
+            // Allow onPaste function to reformat raw text first
+            if (event && typeof _this2.props.onPaste === "function") {
+                text = _this2.props.onPaste(event, text);
+            }
             var value = _this2.state.value;
             var selection = _this2.getSelection();
             _this2.pasteText(value, text, selection, event);

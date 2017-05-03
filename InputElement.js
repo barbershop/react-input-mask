@@ -822,6 +822,10 @@ class InputElement extends React.Component {
             text = event.clipboardData.getData("text/plain");
         }
         if (text) {
+            // Allow onPaste function to reformat raw text first
+            if (event && typeof this.props.onPaste === "function") {
+                text = this.props.onPaste(event, text);
+            }
             var value = this.state.value;
             var selection = this.getSelection();
             this.pasteText(value, text, selection, event);
